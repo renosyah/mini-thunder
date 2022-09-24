@@ -28,13 +28,10 @@ func _motion(delta):
 			_velocity.y = 0
 			
 		_snap = Vector3.ZERO
-			
 		rotation.y = lerp_angle(rotation.y, horizontal_rotation, rotation_speed * delta)
-
+		
 		_accelerate(delta)
 		_velocity.y += climb_direction * climb_speed * delta
-		_velocity = move_and_slide_with_snap(_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle)
-		_velocity.y = lerp(_velocity.y, 0.0, 5 * delta)
 		
 		_pitch_input = lerp(_pitch_input, move_direction.y, input_response * delta)
 		_roll_input = lerp(_roll_input, -move_direction.x , input_response * delta)
@@ -46,3 +43,6 @@ func _motion(delta):
 		rotation_degrees.x = clamp(rotation_degrees.x, -35, 35)
 		
 		transform.basis = transform.basis.orthonormalized()
+		
+	_velocity = move_and_slide_with_snap(_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle)
+	_velocity.y = lerp(_velocity.y, 0.0, 5 * delta)
