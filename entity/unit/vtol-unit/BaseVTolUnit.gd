@@ -29,8 +29,8 @@ func _motion(delta):
 	#._motion(delta)
 	_direction_input()
 	
-	rotation.x = lerp(rotation.x, 0, rotation_speed * delta)
-	rotation.z = lerp(rotation.z, 0, rotation_speed * delta)
+	rotation.x = lerp(rotation.x, 0.0, rotation_speed * delta)
+	rotation.z = lerp(rotation.z, 0.0, rotation_speed * delta)
 	
 	if is_on_floor() and climb_direction <= 0.0:
 		_snap = -get_floor_normal() - get_floor_velocity() * delta
@@ -52,12 +52,12 @@ func _motion(delta):
 	
 	
 func roll_pitch(delta):
-	if move_direction != Vector2.ZERO:
-		_pitch_input = lerp(_pitch_input, move_direction.y, input_response * delta)
-		_roll_input = lerp(_roll_input, -move_direction.x , input_response * delta)
-	else:
+	if is_equal_approx(_velocity.length(), 0.0):
 		_pitch_input = lerp(_pitch_input, _wobling.y, 1 * delta)
 		_roll_input = lerp(_roll_input, -_wobling.x , 1 * delta)
+	else:
+		_pitch_input = lerp(_pitch_input, move_direction.y, input_response * delta)
+		_roll_input = lerp(_roll_input, -move_direction.x , input_response * delta)
 		
 	transform.basis = transform.basis.rotated(transform.basis.z, _roll_input * rotation_speed * delta)
 	rotation_degrees.z = clamp(rotation_degrees.z, -35, 35)
