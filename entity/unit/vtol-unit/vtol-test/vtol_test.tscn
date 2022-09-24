@@ -1,0 +1,224 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://entity/unit/vtol-unit/vtol-test/vtol_test.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/icon/aim.png" type="Texture" id=2]
+
+[sub_resource type="BoxShape" id=29]
+extents = Vector3( 1, 0.750869, 0.845175 )
+
+[sub_resource type="CylinderMesh" id=30]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.4
+
+[sub_resource type="SpatialMaterial" id=21]
+albedo_color = Color( 0.352941, 0.352941, 0.352941, 1 )
+
+[sub_resource type="CylinderMesh" id=22]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 1.0
+
+[sub_resource type="SpatialMaterial" id=23]
+albedo_color = Color( 0.231373, 0.231373, 0.231373, 1 )
+
+[sub_resource type="CylinderMesh" id=17]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.2
+
+[sub_resource type="CubeMesh" id=12]
+size = Vector3( 6, 0.08, 0.4 )
+
+[sub_resource type="SpatialMaterial" id=13]
+albedo_color = Color( 0.564706, 0.564706, 0.564706, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 1, 1, 1.5 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+
+[sub_resource type="SphereMesh" id=4]
+radius = 0.5
+height = 0.5
+is_hemisphere = true
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0, 0.67451, 0.741176, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+size = Vector3( 0.5, 0.3, 3 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0.462745, 0.462745, 0.462745, 1 )
+
+[sub_resource type="CubeMesh" id=16]
+size = Vector3( 0.8, 0.1, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=15]
+albedo_color = Color( 0.356863, 0.356863, 0.356863, 1 )
+
+[sub_resource type="CubeMesh" id=25]
+size = Vector3( 0.1, 0.7, 0.2 )
+
+[sub_resource type="SpatialMaterial" id=26]
+albedo_color = Color( 0.443137, 0.443137, 0.443137, 1 )
+
+[sub_resource type="CubeMesh" id=27]
+size = Vector3( 0.2, 0.1, 2.4 )
+
+[sub_resource type="SpatialMaterial" id=28]
+albedo_color = Color( 0.266667, 0.266667, 0.266667, 1 )
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/MeshInstance5:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "rotate"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/MeshInstance5:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
+
+[node name="vtol_test" type="KinematicBody"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0815371, -0.13468 )
+shape = SubResource( 29 )
+
+[node name="turret" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.696093, -0.482594 )
+mesh = SubResource( 30 )
+material/0 = SubResource( 21 )
+
+[node name="gun" type="Spatial" parent="turret"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.493964 )
+
+[node name="barel" type="MeshInstance" parent="turret/gun"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.379483 )
+mesh = SubResource( 22 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 23 )
+
+[node name="RayCast" type="Sprite3D" parent="turret/gun"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.9308 )
+cast_shadow = 0
+generate_lightmap = false
+modulate = Color( 1, 1, 1, 0.584314 )
+pixel_size = 0.05
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource( 2 )
+
+[node name="pivot" type="Spatial" parent="."]
+
+[node name="MeshInstance5" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.677042, -0.204287 )
+mesh = SubResource( 17 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="pivot/MeshInstance5"]
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.13468 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.0256398, -0.853045 )
+mesh = SubResource( 4 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.998437, 0.0558912, 0, -0.0558912, 0.998437, 0, 0.350191, 1.8803 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 7 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.461245, 2.99236 )
+mesh = SubResource( 16 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="MeshInstance7" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.447862, 2.99236 )
+mesh = SubResource( 16 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="MeshInstance8" type="MeshInstance" parent="pivot"]
+transform = Transform( -4.37114e-08, -1, 0, 0.993054, -4.34078e-08, -0.117659, 0.117659, -5.14303e-09, 0.993054, 0, 0.709632, 2.99207 )
+mesh = SubResource( 16 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="MeshInstance4" type="MeshInstance" parent="Spatial"]
+transform = Transform( 0.896471, -0.443102, 0, 0.443102, 0.896471, 0, 0, 0, 1, 0.551282, -0.686561, -0.585334 )
+mesh = SubResource( 25 )
+skeleton = NodePath("../../pivot")
+material/0 = SubResource( 26 )
+
+[node name="MeshInstance9" type="MeshInstance" parent="Spatial"]
+transform = Transform( 0.896471, 0.443103, 0, -0.443103, 0.896471, 0, 0, 0, 1, -0.576461, -0.686561, -0.585334 )
+mesh = SubResource( 25 )
+skeleton = NodePath("../../pivot")
+material/0 = SubResource( 26 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="Spatial"]
+transform = Transform( 0.896471, -0.443102, 0, 0.443102, 0.896471, 0, 0, 0, 1, 0.551282, -0.686561, 0.487611 )
+mesh = SubResource( 25 )
+skeleton = NodePath("../../pivot")
+material/0 = SubResource( 26 )
+
+[node name="MeshInstance10" type="MeshInstance" parent="Spatial"]
+transform = Transform( 0.896471, 0.443103, 0, -0.443103, 0.896471, 0, 0, 0, 1, -0.576461, -0.686561, 0.487611 )
+mesh = SubResource( 25 )
+skeleton = NodePath("../../pivot")
+material/0 = SubResource( 26 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.664466, -0.984861, -0.196444 )
+mesh = SubResource( 27 )
+material/0 = SubResource( 28 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.711809, -1.00292, -0.196444 )
+mesh = SubResource( 27 )
+material/0 = SubResource( 28 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "rotate"
+anims/RESET = SubResource( 18 )
+anims/rotate = SubResource( 19 )

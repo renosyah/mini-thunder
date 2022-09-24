@@ -1,0 +1,48 @@
+extends BaseUnit
+class_name BaseVTolUnit
+
+export var climb_speed = 25.0
+export var horizontal_rotation :float = 0.0
+export var vertical_elevation :float = 0.0
+export var rotation_speed :float = 1.25
+export var input_response = 25.0
+
+var climb_direction:float = 0.0
+
+var _pitch_input:float = 0.0
+var _roll_input:float = 0.0
+
+func _motion(delta):
+	#._motion(delta)
+	_direction_input()
+	
+	rotation.x = lerp(rotation.x, 0, rotation_speed * delta)
+	rotation.z = lerp(rotation.z, 0, rotation_speed * delta)
+	
+	if is_on_floor() and climb_direction <= 0.0:
+		_snap = -get_floor_normal() - get_floor_velocity() * delta
+		if _velocity.y < 0:
+			_velocity.y = 0
+	else:
+		if _snap != Vector3.ZERO and _velocity.y != 0:
+			_velocity.y = 0
+			
+		_snap = Vector3.ZERO
+			
+		rotation.y = lerp_angle(rotation.y, horizontal_rotation, rotation_speed * delta)
+
+		_accelerate(delta)
+		_velocity.y += climb_direction * climb_speed * delta
+		_velocity = move_and_slide_with_snap(_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle)
+		_velocity.y = lerp(_velocity.y, 0.0, 5 * delta)
+		
+		_pitch_input = lerp(_pitch_input, move_direction.y, input_response * delta)
+		_roll_input = lerp(_roll_input, -move_direction.x , input_response * delta)
+		
+		transform.basis = transform.basis.rotated(transform.basis.z, _roll_input * rotation_speed * delta)
+		rotation_degrees.z = clamp(rotation_degrees.z, -35, 35)
+		
+		transform.basis = transform.basis.rotated(transform.basis.x, _pitch_input * rotation_speed * delta)
+		rotation_degrees.x = clamp(rotation_degrees.x, -35, 35)
+		
+		transform.basis = transform.basis.orthonormalized()
