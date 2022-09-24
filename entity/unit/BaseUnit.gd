@@ -33,6 +33,7 @@ func _direction_input() -> void:
 	_aim_direction = Vector3.ZERO
 	var _aim: Basis = get_global_transform().basis
 	_aim_direction = _aim.z * move_direction.y + _aim.x * move_direction.x
+
 	
 func _accelerate(delta: float) -> void:
 	var temp_vel = _velocity
@@ -50,4 +51,3 @@ func _accelerate(delta: float) -> void:
 	
 	_velocity.x = temp_vel.x
 	_velocity.z = temp_vel.z
-	

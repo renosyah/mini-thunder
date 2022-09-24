@@ -1,10 +1,23 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://gameplay/test/battle.gd" type="Script" id=1]
 [ext_resource path="res://entity/unit/vtol-unit/vtol-test/vtol_test.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/3d-marker/3d_marker.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 3.0
 
 [node name="battle" type="Node"]
 script = ExtResource( 1 )
 
 [node name="vtol_test" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.62986, 0 )
+
+[node name="waypoint" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07279, -16.2329 )
+mesh = SubResource( 1 )
+
+[node name="3d_marker" parent="waypoint" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0811, 0 )
