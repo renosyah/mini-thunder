@@ -48,7 +48,7 @@ func _motion(delta):
 			_velocity.y -= _gravity * delta
 			
 		else:
-			_velocity.y -= transform.basis.z.y + move_direction.y * speed * delta
+			_velocity.y -= transform.basis.z.y + move_direction.y * delta
 		
 	_accelerate(delta)
 	_roll(delta)
