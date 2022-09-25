@@ -4,6 +4,7 @@ var _unit :BaseUnit
 
 onready var training_helicopter :BaseVTolUnit = $training_helicopter
 onready var training_tank :BaseGroundUnit = $training_tank
+onready var training_aircraft = $training_aircraft
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,7 +23,8 @@ func _choose_heli():
 	_camera.rotation.y = _unit.rotation.y
 	
 func _choose_fix_wing():
-	pass
+	_unit = training_aircraft
+	_camera.rotation.y = _unit.rotation.y
 	
 func _process(delta):
 	_camera.facing_direction = _ui.camera_control.get_facing_direction()
@@ -36,6 +38,10 @@ func _process(delta):
 	if _unit is BaseGroundUnit:
 		_unit.horizontal_rotation = _camera.get_horizontal_rotation()
 		_unit.vertical_elevation  = _camera.get_vertical_elevation()
+		
+	if _unit is BaseFixedWingUnit:
+		_unit.horizontal_rotation = _camera.get_horizontal_rotation()
+		_unit.vertical_elevation = _camera.get_vertical_elevation()
 		
 		
 func on_joystick_input(output :Vector2):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://gameplay/test/battle.gd" type="Script" id=1]
 [ext_resource path="res://entity/unit/vtol-unit/training_helicopter/training_helicopter.tscn" type="PackedScene" id=2]
@@ -6,9 +6,17 @@
 [ext_resource path="res://entity/unit/ground-unit/training_tank/training_tank.tscn" type="PackedScene" id=4]
 [ext_resource path="res://gameplay/test/ui/heli.png" type="Texture" id=5]
 [ext_resource path="res://gameplay/test/ui/tank.png" type="Texture" id=6]
+[ext_resource path="res://entity/unit/fixed-wing-unit/training_aircraft/training_aircraft.tscn" type="PackedScene" id=7]
+[ext_resource path="res://gameplay/test/ui/fix_wing.png" type="Texture" id=8]
 
 [node name="battle" type="Node"]
 script = ExtResource( 1 )
+
+[node name="training_aircraft" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.68499, 2.71042, 0 )
+
+[node name="3d_marker3" parent="training_aircraft" instance=ExtResource( 3 )]
+icon = ExtResource( 8 )
 
 [node name="training_helicopter" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.31919, 0 )

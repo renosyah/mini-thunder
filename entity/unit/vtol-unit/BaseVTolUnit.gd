@@ -4,7 +4,7 @@ class_name BaseVTolUnit
 export var climb_speed = 25.0
 export var horizontal_rotation :float = 0.0
 export var vertical_elevation :float = 0.0
-export var rotation_speed :float = 1.25
+export var rotation_speed :float = 2.25
 export var input_response = 25.0
 
 var climb_direction:float = 0.0
@@ -51,7 +51,7 @@ func _motion(delta):
 	_velocity.y = lerp(_velocity.y, 0.0, 5 * delta)
 	
 	
-func roll_pitch(delta):
+func roll_pitch(delta: float):
 	if is_equal_approx(_velocity.length(), 0.0):
 		_pitch_input = lerp(_pitch_input, _wobling.y, 1 * delta)
 		_roll_input = lerp(_roll_input, -_wobling.x , 1 * delta)
@@ -66,7 +66,6 @@ func roll_pitch(delta):
 	rotation_degrees.x = clamp(rotation_degrees.x, -35, 35)
 	
 	transform.basis = transform.basis.orthonormalized()
-	
 	
 	
 	
