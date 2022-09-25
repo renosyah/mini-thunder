@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/3d-marker/3d_marker.gd" type="Script" id=1]
 [ext_resource path="res://addons/3d-marker/marker_item/marker_item.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/3d-marker/empty.png" type="Texture" id=3]
 [ext_resource path="res://addons/3d-marker/arrow_down.png" type="Texture" id=4]
 
 [sub_resource type="Animation" id=1]
@@ -130,14 +129,9 @@ anims/reset = SubResource( 4 )
 anims/show = SubResource( 2 )
 
 [node name="marker_icon" type="Sprite3D" parent="."]
+pixel_size = 0.001
 billboard = 1
 double_sided = false
 no_depth_test = true
-texture = ExtResource( 3 )
-
-[node name="arrow_icon" type="Sprite3D" parent="marker_icon"]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.859394, 0 )
-billboard = 1
-double_sided = false
-no_depth_test = true
+fixed_size = true
 texture = ExtResource( 4 )

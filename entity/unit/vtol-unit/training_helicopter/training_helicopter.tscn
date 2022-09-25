@@ -1,7 +1,7 @@
 [gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://entity/unit/vtol-unit/vtol-test/vtol_test.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/icon/aim.png" type="Texture" id=2]
+[ext_resource path="res://entity/unit/vtol-unit/training_helicopter/training_helicopter.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/aiming_reticle/aiming_reticle.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=29]
 extents = Vector3( 1, 0.750869, 0.845175 )
@@ -103,7 +103,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
 }
 
-[node name="vtol_test" type="KinematicBody"]
+[node name="training_helicopter" type="KinematicBody"]
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -124,16 +124,7 @@ mesh = SubResource( 22 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 23 )
 
-[node name="RayCast" type="Sprite3D" parent="turret/gun"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.9308 )
-cast_shadow = 0
-generate_lightmap = false
-modulate = Color( 1, 1, 1, 0.584314 )
-pixel_size = 0.05
-billboard = 1
-double_sided = false
-no_depth_test = true
-texture = ExtResource( 2 )
+[node name="aiming_reticle" parent="turret/gun" instance=ExtResource( 2 )]
 
 [node name="pivot" type="Spatial" parent="."]
 
