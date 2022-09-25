@@ -5,6 +5,7 @@ export var turret_elevation_speed :float = 5.25
 
 onready var turret = $turret
 onready var gun = $turret/gun
+onready var aiming_reticle = $turret/gun/aiming_reticle
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

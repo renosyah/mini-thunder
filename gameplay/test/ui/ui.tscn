@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/joystick/virtual_joystick.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/test/ui/ui.gd" type="Script" id=2]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/ui/camera_control/camera_control.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gameplay/test/ui/heli.png" type="Texture" id=5]
+[ext_resource path="res://gameplay/test/ui/fix_wing.png" type="Texture" id=6]
+[ext_resource path="res://gameplay/test/ui/tank.png" type="Texture" id=7]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -32,6 +35,51 @@ anchor_bottom = 1.0
 margin_right = 0.0
 margin_bottom = 0.0
 joystick = NodePath("../virtual_joystick")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+anchor_right = 1.0
+margin_bottom = 100.0
+mouse_filter = 2
+alignment = 1
+
+[node name="tank" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 344.0
+margin_right = 444.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+icon = ExtResource( 7 )
+flat = true
+expand_icon = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 448.0
+margin_right = 458.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="heli" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 462.0
+margin_right = 562.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+icon = ExtResource( 5 )
+flat = true
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 566.0
+margin_right = 576.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="fix_wing" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 580.0
+margin_right = 680.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+icon = ExtResource( 6 )
+flat = true
+expand_icon = true
 
 [node name="up" type="Button" parent="CanvasLayer/Control"]
 anchor_left = 1.0
@@ -72,3 +120,6 @@ align = 1
 valign = 1
 
 [connection signal="on_joystick_input" from="CanvasLayer/Control/virtual_joystick" to="." method="_on_virtual_joystick_on_joystick_input"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/tank" to="." method="_on_tank_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/heli" to="." method="_on_heli_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/fix_wing" to="." method="_on_fix_wing_pressed"]

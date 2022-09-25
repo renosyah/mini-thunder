@@ -1,5 +1,7 @@
 extends Spatial
 
+export var icon : Texture = preload("res://addons/3d-marker/empty.png")
+export var color : Color = Color.white
 export(String, "show_offscreen", "show_onscreen", "show_always") var mode = "show_offscreen"
 export(Vector2) var screen_border_offset = Vector2( 20.0, 20.0 )
 export(bool) var is_tracked = true setget _set_tracked
@@ -12,6 +14,10 @@ onready var marker_item = $marker_item
 onready var marker_icon = $marker_icon
 
 func _ready():
+	if icon:
+		marker_icon.texture = icon
+		marker_item.set_marker(icon, color)
+		
 	marker_item.visible = false
 	set_process(false)
 	

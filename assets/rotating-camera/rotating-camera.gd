@@ -5,8 +5,6 @@ export var vertical_inverted = false
 export var facing_direction = Vector2.ZERO
 export var camera_rotation_speed = 0.25
 
-onready var _camera = $Camera
-
 func get_horizontal_rotation() -> float:
 	return rotation.y
 	
