@@ -94,7 +94,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3443 )
 mesh = SubResource( 9 )
 material/0 = SubResource( 10 )
 
+[node name="Position3D" type="Position3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.37514 )
+
 [node name="aiming_reticle" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15 )
 
 [node name="CPUParticles" type="CPUParticles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.44582 )
@@ -103,3 +107,7 @@ lifetime = 0.81
 mesh = SubResource( 11 )
 gravity = Vector3( 0, 0, 3 )
 scale_amount_curve = SubResource( 12 )
+
+[node name="firing_delay" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true

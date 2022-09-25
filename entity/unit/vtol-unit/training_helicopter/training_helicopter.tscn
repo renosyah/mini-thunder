@@ -125,6 +125,7 @@ skeleton = NodePath("../..")
 material/0 = SubResource( 23 )
 
 [node name="aiming_reticle" parent="turret/gun" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15 )
 
 [node name="pivot" type="Spatial" parent="."]
 
@@ -213,3 +214,7 @@ material/0 = SubResource( 28 )
 autoplay = "rotate"
 anims/RESET = SubResource( 18 )
 anims/rotate = SubResource( 19 )
+
+[node name="firing_delay" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true

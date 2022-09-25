@@ -3,7 +3,7 @@ extends Node
 
 # Declare member variables here. Examples:
 # var a = 2
-# var b = "text"
+var sound_amplified :float = 5.0
 
 
 # Called when the node enters the scene tree for the first time.

@@ -24,6 +24,9 @@ func moving(delta):
 	.moving(delta)
 	_motion(delta)
 	
+func attack(_at :Vector3):
+	pass
+	
 func _motion(delta):
 	_direction_input()
 	_accelerate(delta)

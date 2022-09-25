@@ -25,7 +25,7 @@ func _choose_heli():
 func _choose_fix_wing():
 	_unit = training_aircraft
 	_camera.rotation.y = _unit.rotation.y
-	
+
 func _process(delta):
 	_camera.facing_direction = _ui.camera_control.get_facing_direction()
 	_camera.translation = _unit.translation
@@ -40,8 +40,12 @@ func _process(delta):
 		_unit.vertical_elevation  = _camera.get_vertical_elevation()
 		
 	if _unit is BaseFixedWingUnit:
+		_unit.climb_direction = 1 if _ui.is_up_pressed() else -1 if _ui.is_down_pressed() else 0
 		_unit.horizontal_rotation = _camera.get_horizontal_rotation()
 		_unit.vertical_elevation = _camera.get_vertical_elevation()
+		
+	if _ui.is_fire_pressed():
+		_unit.attack(Vector3.ZERO)
 		
 		
 func on_joystick_input(output :Vector2):
