@@ -42,9 +42,6 @@ func _motion(delta):
 			_velocity.y = 0
 			
 	else:
-		if _snap != Vector3.ZERO and _velocity.y != 0:
-			_velocity.y = 0
-			
 		_snap = Vector3.ZERO
 		
 		if abs(speed) < 0.5:
@@ -52,13 +49,13 @@ func _motion(delta):
 			
 		else:
 			_velocity.y -= transform.basis.z.y + move_direction.y * speed * delta
-			_velocity.y = lerp(_velocity.y, 0.0, 5 * delta)
 		
 	_accelerate(delta)
 	_roll(delta)
 	#_pitch_yaw(delta)
 	
 	_velocity = move_and_slide_with_snap(_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle)
+	_velocity.y = lerp(_velocity.y, 0.0, 5 * delta)
 	
 func _roll(delta: float):
 	if _snap != Vector3.ZERO:
