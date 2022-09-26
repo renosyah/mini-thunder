@@ -1,16 +1,10 @@
 extends MarginContainer
 
-export var joystick :NodePath
-export var camera_deceleration = 5.0
 var _facing_direction :Vector2 = Vector2.ZERO
-
 var _touch_index : int = -1
 
 func get_facing_direction() -> Vector2:
 	return _facing_direction
-
-func _process(delta):
-	_facing_direction = lerp(_facing_direction, Vector2.ZERO, camera_deceleration * delta)
 	
 func _input(event : InputEvent):
 	if event is InputEventScreenTouch:
@@ -21,6 +15,7 @@ func _input(event : InputEvent):
 				
 		elif event.index == _touch_index:
 			_touch_index = -1
+			_facing_direction = Vector2.ZERO
 			get_tree().set_input_as_handled()
 			
 	elif event is InputEventScreenDrag:
