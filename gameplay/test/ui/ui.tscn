@@ -22,21 +22,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="virtual_joystick" parent="CanvasLayer/Control" instance=ExtResource( 1 )]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 110.0
-margin_top = -286.0
-margin_right = 310.0
-margin_bottom = -86.0
-
-[node name="camera_control" parent="CanvasLayer/Control" instance=ExtResource( 4 )]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 0.0
-margin_bottom = 0.0
-joystick = NodePath("../virtual_joystick")
-
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
 anchor_right = 1.0
 margin_bottom = 100.0
@@ -81,6 +66,23 @@ rect_min_size = Vector2( 100, 100 )
 icon = ExtResource( 6 )
 flat = true
 expand_icon = true
+
+[node name="camera_control" parent="CanvasLayer/Control" instance=ExtResource( 4 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 0.0
+margin_bottom = 0.0
+mouse_filter = 2
+joystick = NodePath("../virtual_joystick")
+
+[node name="virtual_joystick" parent="CanvasLayer/Control" instance=ExtResource( 1 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 110.0
+margin_top = -286.0
+margin_right = 310.0
+margin_bottom = -86.0
+mouse_filter = 2
 
 [node name="up" parent="CanvasLayer/Control" instance=ExtResource( 8 )]
 anchor_left = 0.5
@@ -139,7 +141,7 @@ text = "Fire"
 align = 1
 valign = 1
 
-[connection signal="on_joystick_input" from="CanvasLayer/Control/virtual_joystick" to="." method="_on_virtual_joystick_on_joystick_input"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/tank" to="." method="_on_tank_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/heli" to="." method="_on_heli_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/fix_wing" to="." method="_on_fix_wing_pressed"]
+[connection signal="on_joystick_input" from="CanvasLayer/Control/virtual_joystick" to="." method="_on_virtual_joystick_on_joystick_input"]
