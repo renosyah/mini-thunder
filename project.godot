@@ -171,7 +171,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Mini Thunder"
-run/main_scene="res://gameplay/test/battle.tscn"
+run/main_scene="res://menu/lobby/lobby.tscn"
 config/icon="res://icon.png"
 
 [autoload]

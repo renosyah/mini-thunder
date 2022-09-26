@@ -2,8 +2,6 @@ extends BaseUnit
 class_name BaseVTolUnit
 
 export var climb_speed = 25.0
-export var horizontal_rotation :float = 0.0
-export var vertical_elevation :float = 0.0
 export var rotation_speed :float = 2.25
 export var input_response = 25.0
 
@@ -25,8 +23,8 @@ func _ready():
 func _wobling_timer_timeout():
 	_wobling = Vector2(rand_range(-0.12, 0.12), rand_range(-0.11, 0.11))
 	
-func _motion(delta):
-	#._motion(delta)
+func master_moving(delta):
+	.master_moving(delta)
 	_direction_input()
 	
 	rotation.x = lerp(rotation.x, 0.0, rotation_speed * delta)
@@ -41,7 +39,7 @@ func _motion(delta):
 			_velocity.y = 0
 			
 		_snap = Vector3.ZERO
-		rotation.y = lerp_angle(rotation.y, horizontal_rotation, rotation_speed * delta)
+		rotation.y = lerp_angle(rotation.y, facing_direction.y, rotation_speed * delta)
 		
 		_accelerate(delta)
 		_velocity.y += climb_direction * climb_speed * delta
@@ -50,6 +48,8 @@ func _motion(delta):
 	_velocity = move_and_slide_with_snap(_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle)
 	_velocity.y = lerp(_velocity.y, 0.0, 5 * delta)
 	
+func puppet_moving(delta):
+	.puppet_moving(delta)
 	
 func roll_pitch(delta: float):
 	if is_equal_approx(_velocity.length(), 0.0):

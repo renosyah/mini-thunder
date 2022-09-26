@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://gameplay/test/battle.gd" type="Script" id=1]
+[ext_resource path="res://gameplay/test/host/battle.gd" type="Script" id=1]
 [ext_resource path="res://entity/unit/vtol-unit/training_helicopter/training_helicopter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/3d-marker/3d_marker.tscn" type="PackedScene" id=3]
 [ext_resource path="res://entity/unit/ground-unit/training_tank/training_tank.tscn" type="PackedScene" id=4]

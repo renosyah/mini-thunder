@@ -2,9 +2,9 @@ extends Node
 class_name BaseGameplay
 
 func _ready():
-	get_tree().set_quit_on_go_back(false)
-	get_tree().set_auto_accept_quit(false)
-	
+#	get_tree().set_quit_on_go_back(false)
+#	get_tree().set_auto_accept_quit(false)
+#
 	init_connection_watcher()
 	load_map()
 	setup_ui()
@@ -100,8 +100,6 @@ func init_client():
 	if is_server():
 		return
 		
-	Global.connect("on_host_game_session_ready", self, "_on_host_game_session_ready_rematch")
-	
 	network_timmer = Timer.new()
 	network_timmer.wait_time = latency_delay
 	network_timmer.connect("timeout", self , "on_client_pool_network_request")

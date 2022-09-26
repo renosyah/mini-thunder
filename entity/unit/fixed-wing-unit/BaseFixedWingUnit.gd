@@ -6,8 +6,6 @@ export var trust_step_speed :float = 15.0
 export var trust_min_speed :float = 5.0
 export var trust_max_speed :float = 25.0
 export var rotation_speed :float = 1.25
-export var horizontal_rotation :float = 0.0
-export var vertical_elevation :float = 0.0
 export var input_response = 25.0
 
 var climb_direction:float = 0.0
@@ -26,12 +24,12 @@ func _direction_input() -> void:
 	var _aim: Basis = get_global_transform().basis
 	_aim_direction = _aim.z * -1.0
 	
-func _motion(delta):
-	#._motion(delta)
+func master_moving(delta):
+	.master_moving(delta)
 	_direction_input()
 	
 	rotation.x = lerp(rotation.x, 0.0, rotation_speed * delta)
-	rotation.y = lerp_angle(rotation.y, horizontal_rotation, rotation_speed * delta)
+	rotation.y = lerp_angle(rotation.y, facing_direction.y, rotation_speed * delta)
 	rotation.z = lerp(rotation.z, 0.0, rotation_speed * delta)
 	speed += climb_direction * trust_step_speed * delta
 	speed = clamp(speed, 0, trust_max_speed)
@@ -52,10 +50,12 @@ func _motion(delta):
 		
 	_accelerate(delta)
 	_roll(delta)
-	#_pitch_yaw(delta)
 	
 	_velocity = move_and_slide_with_snap(_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle)
 	_velocity.y = lerp(_velocity.y, 0.0, 5 * delta)
+	
+func puppet_moving(delta):
+	.puppet_moving(delta)
 	
 func _roll(delta: float):
 	if _snap != Vector3.ZERO:
@@ -67,11 +67,3 @@ func _roll(delta: float):
 	transform.basis = transform.basis.rotated(transform.basis.z, _roll_input * rotation_speed * delta)
 	transform.basis = transform.basis.rotated(transform.basis.x, _pitch_input * rotation_speed * delta)
 	transform.basis = transform.basis.orthonormalized()
-	
-func _pitch_yaw(delta: float) -> void:
-	if _snap != Vector3.ZERO:
-		return
-		
-	var v_amount = abs(vertical_elevation)
-	var v_direction = sign(vertical_elevation)
-	rotation_degrees.x = lerp(0, 60, v_amount) * v_direction

@@ -12,21 +12,27 @@ onready var firing_delay = $firing_delay
 func _ready():
 	pass # Replace with function body.
 	
-func attack(_at :Vector3):
-	.attack(_at)
+remotesync func _attack():
+	var bullet = preload("res://entity/projectile/high_caliber/high_caliber.tscn").instance()
+	bullet.speed = 40
+	add_child(bullet)
+	bullet.translation = gun.global_transform.origin
+	bullet.launch(aiming_reticle.global_transform.origin)
 	
+func attack():
+	#.attack()
+	
+	if not _is_master():
+		return
+		
 	if firing_delay.is_stopped():
-		var bullet = preload("res://entity/projectile/high_caliber/high_caliber.tscn").instance()
-		bullet.speed = 40
-		add_child(bullet)
-		bullet.translation = gun.global_transform.origin
-		bullet.launch(aiming_reticle.global_transform.origin)
+		rpc_unreliable("_attack")
 		firing_delay.start()
 		
 	
-func _motion(delta):
-	._motion(delta)
-	turret.rotation.y = lerp_angle(turret.rotation.y, horizontal_rotation - rotation.y, turret_rotation_speed * 2 * delta)
+func moving(delta):
+	.moving(delta)
+	turret.rotation.y = lerp_angle(turret.rotation.y, facing_direction.y - rotation.y, turret_rotation_speed * 2 * delta)
 	
-	gun.rotation.x = lerp_angle(gun.rotation.x, vertical_elevation - rotation.x, turret_elevation_speed * delta)
+	gun.rotation.x = lerp_angle(gun.rotation.x,facing_direction.x - rotation.x, turret_elevation_speed * delta)
 	gun.rotation_degrees.x = clamp(gun.rotation_degrees.x, -5, 15)
