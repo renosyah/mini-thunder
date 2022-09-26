@@ -13,6 +13,23 @@ var climb_direction:float = 0.0
 var _pitch_input:float = 0.0
 var _roll_input:float = 0.0
 
+################################################################
+# multiplayer
+func _network_timmer_timeout():
+	._network_timmer_timeout()
+	
+	if is_dead:
+		return
+		
+	if _is_master():
+		rset_unreliable("_puppet_speed", speed)
+		
+puppet var _puppet_speed :float setget _set_puppet_speed
+func _set_puppet_speed(val :float):
+	_puppet_speed = val
+	speed = _puppet_speed
+	
+################################################################
 func _ready():
 	speed = 0.0
 	gravity_multiplier = 2.0

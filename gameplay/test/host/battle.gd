@@ -44,7 +44,7 @@ func _process(delta):
 		_unit.climb_direction = 1 if _ui.is_up_pressed() else -1 if _ui.is_down_pressed() else 0
 		
 	if _unit is BaseGroundUnit:
-		pass
+		_unit.camera_basis = _camera.get_global_transform().basis
 		
 	if _unit is BaseFixedWingUnit:
 		_unit.climb_direction = 1 if _ui.is_up_pressed() else -1 if _ui.is_down_pressed() else 0
@@ -69,11 +69,11 @@ remote func _send_command(_to_unit :NodePath, _command : Dictionary):
 		to_unit.climb_direction = _command["command_climb_direction"]
 		
 	if to_unit is BaseGroundUnit:
-		pass
+		to_unit.camera_basis = _command["command_camera_basis"]
 		
 	if to_unit is BaseFixedWingUnit:
-			to_unit.climb_direction = _command["command_climb_direction"]
-			
+		to_unit.climb_direction = _command["command_climb_direction"]
+		
 	to_unit.move_direction = _command["command_move_direction"]
 	to_unit.facing_direction = _command["command_facing_direction"]
 	if _command["command_atack"]:

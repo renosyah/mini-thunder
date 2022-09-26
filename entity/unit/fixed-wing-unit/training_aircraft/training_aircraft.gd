@@ -33,7 +33,7 @@ func attack():
 func moving(delta):
 	.moving(delta)
 	cpu_particles.emitting = speed > trust_min_speed
-
+	
 	turret.rotation.y = lerp_angle(turret.rotation.y, facing_direction.y - rotation.y, turret_rotation_speed * 2 * delta)
 	turret.rotation_degrees.y = clamp(turret.rotation_degrees.y  , -45, 45)
 	

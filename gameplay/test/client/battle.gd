@@ -38,11 +38,15 @@ func _choose_fix_wing():
 	_camera.rotation.y = _unit.rotation.y
 	
 func on_client_pool_network_request():
+	if not is_network_on():
+		return
+		
 	rpc_unreliable_id(Network.PLAYER_HOST_ID, "_send_command", _unit.get_path(), {
 		"command_move_direction":command_move_direction,
 		"command_facing_direction":command_facing_direction,
 		"command_climb_direction":command_climb_direction,
 		"command_atack":command_atack,
+		"command_camera_basis": _camera.get_global_transform().basis,
 	})
 	
 func _process(delta):

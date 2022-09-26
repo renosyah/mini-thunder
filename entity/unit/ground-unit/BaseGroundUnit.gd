@@ -1,17 +1,18 @@
 extends BaseUnit
 class_name BaseGroundUnit
 
-export var rotation_speed :float = 1.25
+var camera_basis :Basis
+export var rotation_speed :float = 6.25
 
 func _ready():
+	camera_basis = transform.basis
 	gravity_multiplier = 2.0
 	_gravity = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
 
 func _direction_input() -> void:
 	#._direction_input()
 	_aim_direction = Vector3.ZERO
-	var _aim: Basis = get_global_transform().basis
-	_aim_direction = _aim.z * move_direction.y
+	_aim_direction = camera_basis.z * move_direction.y + camera_basis.x * move_direction.x
 	
 func master_moving(delta):
 	.master_moving(delta)
@@ -19,14 +20,12 @@ func master_moving(delta):
 	
 	if is_on_floor():
 		_snap = -get_floor_normal() - get_floor_velocity() * delta
-		
-		if move_direction.y >= 0.0:
-			rotate_y(move_direction.x * rotation_speed * delta)
-		else:
-			rotate_y(-move_direction.x * rotation_speed * delta)
-			
 		if _velocity.y < 0:
 			_velocity.y = 0
+			
+		if _aim_direction != Vector3.ZERO:
+			_transform_turning(_velocity + translation, delta)
+			
 	else:
 		if _snap != Vector3.ZERO and _velocity.y != 0:
 			_velocity.y = 0
@@ -39,3 +38,11 @@ func master_moving(delta):
 
 func puppet_moving(delta):
 	.puppet_moving(delta)
+	
+############################################################
+# utils
+func _transform_turning(direction, delta):
+	var new_transform = transform.looking_at(direction, Vector3.UP)
+	transform = transform.interpolate_with(new_transform, rotation_speed * delta)
+
+
