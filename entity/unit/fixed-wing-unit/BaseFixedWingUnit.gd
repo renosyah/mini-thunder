@@ -45,8 +45,13 @@ func master_moving(delta):
 	.master_moving(delta)
 	_direction_input()
 	
+	
+	if abs(move_direction.x) > 0.0:
+		rotation.y = lerp_angle(rotation.y, rotation.y - move_direction.x, rotation_speed * delta)
+	else:
+		rotation.y = lerp_angle(rotation.y, facing_direction.y, rotation_speed * delta)
+		
 	rotation.x = lerp(rotation.x, 0.0, rotation_speed * delta)
-	rotation.y = lerp_angle(rotation.y, facing_direction.y, rotation_speed * delta)
 	rotation.z = lerp(rotation.z, 0.0, rotation_speed * delta)
 	speed += climb_direction * trust_step_speed * delta
 	speed = clamp(speed, 0, trust_max_speed)
