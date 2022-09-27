@@ -42,15 +42,9 @@ func _direction_input() -> void:
 	_aim_direction = _aim.z * -1.0
 	
 func master_moving(delta):
-	.master_moving(delta)
+	#.master_moving(delta)
 	_direction_input()
 	
-	
-	if abs(move_direction.x) > 0.0:
-		rotation.y = lerp_angle(rotation.y, rotation.y - move_direction.x, rotation_speed * delta)
-	else:
-		rotation.y = lerp_angle(rotation.y, facing_direction.y, rotation_speed * delta)
-		
 	rotation.x = lerp(rotation.x, 0.0, rotation_speed * delta)
 	rotation.z = lerp(rotation.z, 0.0, rotation_speed * delta)
 	speed += climb_direction * trust_step_speed * delta
@@ -58,15 +52,15 @@ func master_moving(delta):
 	
 	if is_on_floor() and speed <= trust_min_speed:
 		_snap = -get_floor_normal() - get_floor_velocity() * delta
-		if _velocity.y < 0:
-			_velocity.y = 0
-			
 	else:
 		_snap = Vector3.ZERO
-		
+		if abs(move_direction.x) > 0.0:
+			rotation.y = lerp_angle(rotation.y, rotation.y - move_direction.x, rotation_speed * delta)
+		else:
+			rotation.y = lerp_angle(rotation.y, facing_direction.y, rotation_speed * delta)
+			
 		if abs(speed) < 0.5:
 			_velocity.y -= _gravity * delta
-			
 		else:
 			_velocity.y -= transform.basis.z.y + move_direction.y * delta
 		
