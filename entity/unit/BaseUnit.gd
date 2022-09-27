@@ -16,14 +16,14 @@ var _up_direction :Vector3 = Vector3.UP
 var _stop_on_slope :bool = true
 var _aim_direction :Vector3 = Vector3()
 
-onready var _gravity = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
+onready var _gravity :float = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
 onready var _floor_max_angle: float = deg2rad(45.0)
 
 var _tween_movement :Tween
 
 ################################################################
 # multiplayer
-func _network_timmer_timeout():
+func _network_timmer_timeout() -> void:
 	._network_timmer_timeout()
 	
 	if is_dead:
@@ -35,7 +35,7 @@ func _network_timmer_timeout():
 		rset_unreliable("_puppet_facing_direction", facing_direction)
 		
 puppet var _puppet_translation :Vector3 setget _set_puppet_translation
-func _set_puppet_translation(_val :Vector3):
+func _set_puppet_translation(_val :Vector3) -> void:
 	_puppet_translation = _val
 	
 	if is_dead:
@@ -48,26 +48,26 @@ func _set_puppet_translation(_val :Vector3):
 	_tween_movement.start()
 	
 puppet var _puppet_rotation :Vector3 setget _set_puppet_rotation
-func _set_puppet_rotation(_val :Vector3):
+func _set_puppet_rotation(_val :Vector3) -> void:
 	_puppet_rotation = _val
 	
 puppet var _puppet_facing_direction :Vector2 setget _set_puppet_facing_direction
-func _set_puppet_facing_direction(val :Vector2):
+func _set_puppet_facing_direction(val :Vector2) -> void:
 	_puppet_facing_direction = val
 	facing_direction = _puppet_facing_direction
 	
-remotesync func _attack():
+remotesync func _attack() -> void:
 	pass
 	
 ################################################################
 # function main
-func _ready():
+func _ready() -> void:
 	_tween_movement = Tween.new()
 	add_child(_tween_movement)
 	
 ################################################################
 # function action
-func attack():
+func attack() -> void:
 	if not _is_master():
 		return
 		
@@ -75,13 +75,13 @@ func attack():
 	
 ################################################################
 # function common
-func master_moving(delta):
+func master_moving(delta :float) -> void:
 	.master_moving(delta)
 	_direction_input()
 	_accelerate(delta)
 	_velocity = move_and_slide_with_snap(_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle)
 	
-func puppet_moving(delta):
+func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
 	rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, 5 * delta)
 	rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, 5 * delta)

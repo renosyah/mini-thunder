@@ -10,8 +10,8 @@ var target_node: Spatial
 
 var windowsize
 onready var animate = $AnimationPlayer
-onready var marker_item = $marker_item
-onready var marker_icon = $marker_icon
+onready var marker_item :Sprite = $marker_item
+onready var marker_icon :Sprite3D = $marker_icon
 
 func _ready():
 	if icon:

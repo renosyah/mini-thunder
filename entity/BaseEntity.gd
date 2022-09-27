@@ -10,7 +10,7 @@ signal on_respawn(_entity)
 var player :PlayerData
 
 # vitality
-var is_dead = false
+var is_dead :bool = false
 var hit_by_player :PlayerData = PlayerData.new()
 var tag : String = "entity"
 export var hp : int = 100.0
@@ -21,10 +21,10 @@ var _network_timmer : Timer
 
 ############################################################
 # multiplayer func
-func _network_timmer_timeout():
+func _network_timmer_timeout() -> void:
 	pass
 	
-remotesync func _heal(_hp_left, _hp_added : int):
+remotesync func _heal(_hp_left, _hp_added : int) -> void:
 	if is_dead:
 		return
 		
@@ -33,7 +33,7 @@ remotesync func _heal(_hp_left, _hp_added : int):
 		
 	emit_signal("on_heal", self, _hp_added)
 	
-remotesync func _take_damage(_hp_left, _damage : int, _hit_by :Dictionary):
+remotesync func _take_damage(_hp_left, _damage : int, _hit_by :Dictionary) -> void:
 	if is_dead:
 		return
 		
@@ -44,21 +44,21 @@ remotesync func _take_damage(_hp_left, _damage : int, _hit_by :Dictionary):
 	
 	emit_signal("on_take_damage", self, _damage, hit_by_player)
 	
-remotesync func _dead(_kill_by :Dictionary):
+remotesync func _dead(_kill_by :Dictionary) -> void:
 	is_dead = true
 	set_process(false)
 	
 	hit_by_player.from_dictionary(_kill_by)
 	emit_signal("on_dead", self, hit_by_player)
 	
-remotesync func _reset():
+remotesync func _reset() -> void:
 	hp = max_hp
 	is_dead = false
 	
 	set_process(true)
 	
 ############################################################
-func _ready():
+func _ready() -> void:
 	if not _is_network_running():
 		return
 	
@@ -72,9 +72,8 @@ func _ready():
 	add_child(_timer)
 	_network_timmer = _timer
 	
-	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(delta :float) -> void:
 	moving(delta)
 	
 	if not _is_network_running():
@@ -85,16 +84,16 @@ func _process(delta):
 	else:
 		puppet_moving(delta)
 	
-func master_moving(delta):
+func master_moving(delta :float) -> void:
 	pass
 	
-func moving(_delta):
+func moving(_delta :float) -> void:
 	pass
 	
-func puppet_moving(_delta):
+func puppet_moving(_delta :float) -> void:
 	pass
 	
-func heal(_hp_added : int):
+func heal(_hp_added : int) -> void:
 	if not _is_master():
 		return
 		
@@ -108,7 +107,7 @@ func heal(_hp_added : int):
 	
 	rpc("_heal", hp, _hp_added)
 	
-func take_damage(_damage : int, hit_by_player : PlayerData):
+func take_damage(_damage : int, hit_by_player : PlayerData) -> void:
 	if not _is_master():
 		return
 	
@@ -123,7 +122,7 @@ func take_damage(_damage : int, hit_by_player : PlayerData):
 		
 	rpc_unreliable("_take_damage", hp, _damage, hit_by_player.to_dictionary())
 	
-func dead(kill_by_player : PlayerData):
+func dead(kill_by_player : PlayerData) -> void:
 	if not _is_master():
 		return
 		
@@ -136,9 +135,9 @@ func reset():
 	rpc("_reset")
 	
 ############################################################
-func team():
+func team() -> int:
 	if not player:
-		return ""
+		return 0
 		
 	return player.player_team
 	
@@ -147,7 +146,7 @@ func is_dead() -> bool:
 	
 ############################################################
 # multiplayer func
-func _is_network_running():
+func _is_network_running() -> bool:
 	if not get_tree().network_peer:
 		return false
 		

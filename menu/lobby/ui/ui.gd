@@ -1,5 +1,7 @@
 extends Control
 
+onready var ip = $CanvasLayer/Control/VBoxContainer/ip
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -15,7 +17,7 @@ func _host_player_connected(_player_network_unique_id : int, _player : Dictionar
 	
 func _on_join_pressed():
 	Network.connect("client_player_connected", self , "_client_player_connected")
-	var err = Network.connect_to_server("192.168.100.162", Global.client.port , {})
+	var err = Network.connect_to_server(ip.text, Global.client.port , {})
 	if err != OK:
 		return
 		
