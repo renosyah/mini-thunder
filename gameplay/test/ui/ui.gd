@@ -4,11 +4,6 @@ signal tank
 signal heli
 signal fix_wing
 
-signal engine_status(is_on)
-
-signal on_joystick_input(output)
-signal on_camera_control_input(event)
-
 var events : Dictionary = {}
 onready var virtual_joystick = $CanvasLayer/Control/virtual_joystick
 onready var up = $CanvasLayer/Control/up
@@ -25,9 +20,6 @@ func hide_control():
 	down.hide()
 	camera_control.hide()
 	
-func _on_virtual_joystick_on_joystick_input(output):
-	emit_signal("on_joystick_input", output)
-	
 func is_up_pressed():
 	return up.pressed
 	
@@ -36,6 +28,12 @@ func is_down_pressed():
 	
 func is_fire_pressed():
 	return fire.pressed
+	
+func joystick_move_direction() -> Vector2:
+	return virtual_joystick.get_output()
+	
+func camera_facing_direction() -> Vector2:
+	return camera_control.get_facing_direction()
 	
 func _on_fix_wing_pressed():
 	hide_control()

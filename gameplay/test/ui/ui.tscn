@@ -73,7 +73,6 @@ anchor_bottom = 1.0
 margin_right = 0.0
 margin_bottom = 0.0
 mouse_filter = 2
-joystick = NodePath("../virtual_joystick")
 
 [node name="virtual_joystick" parent="CanvasLayer/Control" instance=ExtResource( 1 )]
 anchor_top = 1.0
@@ -144,4 +143,3 @@ valign = 1
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/tank" to="." method="_on_tank_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/heli" to="." method="_on_heli_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/fix_wing" to="." method="_on_fix_wing_pressed"]
-[connection signal="on_joystick_input" from="CanvasLayer/Control/virtual_joystick" to="." method="_on_virtual_joystick_on_joystick_input"]

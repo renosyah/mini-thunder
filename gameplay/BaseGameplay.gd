@@ -28,14 +28,6 @@ var _ui :BaseUi
 func setup_ui():
 	_ui = preload("res://gameplay/test/ui/ui.tscn").instance()
 	add_child(_ui)
-	_ui.connect("on_joystick_input", self, "on_joystick_input")
-	_ui.connect("on_camera_control_input", self, "on_camera_control_input")
-	
-func on_joystick_input(output :Vector2):
-	pass
-	
-func on_camera_control_input(event : InputEvent):
-	pass
 	
 ################################################################
 # camera

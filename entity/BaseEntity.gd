@@ -59,6 +59,8 @@ remotesync func _reset() -> void:
 	
 ############################################################
 func _ready() -> void:
+	set_network_master(Network.PLAYER_HOST_ID)
+	
 	if not _is_network_running():
 		return
 	

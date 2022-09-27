@@ -29,7 +29,7 @@ margin_right = 248.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = ExtResource( 2 )
-text = "192.168.1.33"
+text = "192.168.100.162"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 64.0

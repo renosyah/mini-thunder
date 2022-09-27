@@ -19,8 +19,6 @@ var _aim_direction :Vector3 = Vector3()
 onready var _gravity :float = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
 onready var _floor_max_angle: float = deg2rad(45.0)
 
-var _tween_movement :Tween
-
 ################################################################
 # multiplayer
 func _network_timmer_timeout() -> void:
@@ -31,28 +29,14 @@ func _network_timmer_timeout() -> void:
 		
 	if _is_master():
 		rset_unreliable("_puppet_translation", translation)
-		rset_unreliable("_puppet_rotation", Vector3(rotation.x, rotation.y, rotation.z))
+		rset_unreliable("_puppet_rotation", rotation)
 		rset_unreliable("_puppet_facing_direction", facing_direction)
 		
-puppet var _puppet_translation :Vector3 setget _set_puppet_translation
-func _set_puppet_translation(_val :Vector3) -> void:
-	_puppet_translation = _val
+puppet var _puppet_translation :Vector3
+puppet var _puppet_rotation :Vector3
 	
-	if is_dead:
-		return
-	
-	if _is_master():
-		return
-		
-	_tween_movement.interpolate_property(self,"translation", translation, _puppet_translation, Network.LATENCY_TWEEN)
-	_tween_movement.start()
-	
-puppet var _puppet_rotation :Vector3 setget _set_puppet_rotation
-func _set_puppet_rotation(_val :Vector3) -> void:
-	_puppet_rotation = _val
-	
-puppet var _puppet_facing_direction :Vector2 setget _set_puppet_facing_direction
-func _set_puppet_facing_direction(val :Vector2) -> void:
+puppet var _puppet_facing_direction :Vector2 setget _set_facing_direction
+func _set_facing_direction(val :Vector2) -> void:
 	_puppet_facing_direction = val
 	facing_direction = _puppet_facing_direction
 	
@@ -62,8 +46,7 @@ remotesync func _attack() -> void:
 ################################################################
 # function main
 func _ready() -> void:
-	_tween_movement = Tween.new()
-	add_child(_tween_movement)
+	pass
 	
 ################################################################
 # function action
@@ -83,6 +66,7 @@ func master_moving(delta :float) -> void:
 	
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
+	translation = translation.linear_interpolate(_puppet_translation, 2.5 * delta)
 	rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, 5 * delta)
 	rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, 5 * delta)
 	rotation.z = lerp_angle(rotation.z, _puppet_rotation.z, 5 * delta)
