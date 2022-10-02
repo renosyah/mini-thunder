@@ -1,8 +1,8 @@
 extends BaseFixedWingUnit
 
-onready var cpu_particles = $CPUParticles
-onready var firing_delay = $firing_delay
-onready var turret = $turret
+onready var cpu_particles :CPUParticles = $CPUParticles
+onready var firing_delay :Timer = $firing_delay
+onready var turret :BaseTurret = $turret
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

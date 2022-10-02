@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://entity/unit/ground-unit/training_tank/training_tank.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/aiming_reticle/aiming_reticle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entity/turret/tank-turret/tank-turret.tscn" type="PackedScene" id=2]
 
 [sub_resource type="ConvexPolygonShape" id=8]
 points = PoolVector3Array( 0.5, 0.2, 1, 0.5, -0.2, 1, 0.5, 0.2, -1, -0.5, 0.2, 1, -0.5, -0.2, 1, 0.5, -0.2, -1, -0.5, 0.2, -1, -0.5, -0.2, -1 )
@@ -17,20 +17,6 @@ size = Vector3( 1, 0.2, 1 )
 
 [sub_resource type="SpatialMaterial" id=10]
 albedo_color = Color( 0.27451, 0.27451, 0.27451, 1 )
-
-[sub_resource type="CubeMesh" id=4]
-size = Vector3( 2, 0.7, 1.6 )
-
-[sub_resource type="SpatialMaterial" id=5]
-albedo_color = Color( 0.498039, 0.498039, 0.498039, 1 )
-
-[sub_resource type="CylinderMesh" id=6]
-top_radius = 0.2
-bottom_radius = 0.2
-height = 3.0
-
-[sub_resource type="SpatialMaterial" id=7]
-albedo_color = Color( 0.345098, 0.345098, 0.345098, 1 )
 
 [node name="training_tank" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -49,21 +35,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47617, 1.07214 )
 mesh = SubResource( 9 )
 material/0 = SubResource( 10 )
 
-[node name="turret" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.745977, -0.416147 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 5 )
-
-[node name="gun" type="Spatial" parent="turret"]
-
-[node name="MeshInstance" type="MeshInstance" parent="turret/gun"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -2.18957 )
-mesh = SubResource( 6 )
-material/0 = SubResource( 7 )
-
-[node name="aiming_reticle" parent="turret/gun" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15 )
-modulate = Color( 1, 1, 1, 1 )
+[node name="turret" parent="." instance=ExtResource( 2 )]
 
 [node name="firing_delay" type="Timer" parent="."]
 wait_time = 0.8

@@ -1,8 +1,4 @@
-extends MeshInstance
-
-export var turret_rotation_speed :float = 5.50
-export var turret_elevation_speed :float = 5.25
-export var facing_direction :Vector2 = Vector2.ZERO
+extends BaseTurret
 
 onready var gun = $gun
 onready var projectile_spawn_point = $gun/Position3D

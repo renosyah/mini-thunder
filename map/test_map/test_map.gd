@@ -26,6 +26,7 @@ func _ready():
 	var water_mesh_instance = MeshInstance.new()
 	water_mesh_instance.mesh = water_mesh
 	add_child(water_mesh_instance)
+	water_mesh_instance.translation.y -= 1.0
 	
 	var surface_tool = SurfaceTool.new()
 	surface_tool.create_from(land_mesh, 0)
