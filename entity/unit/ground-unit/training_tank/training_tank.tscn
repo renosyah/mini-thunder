@@ -63,6 +63,7 @@ material/0 = SubResource( 7 )
 
 [node name="aiming_reticle" parent="turret/gun" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15 )
+modulate = Color( 1, 1, 1, 1 )
 
 [node name="firing_delay" type="Timer" parent="."]
 wait_time = 0.8

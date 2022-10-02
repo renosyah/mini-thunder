@@ -1,7 +1,7 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://entity/unit/fixed-wing-unit/training_aircraft/training_aircraft.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/aiming_reticle/aiming_reticle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entity/turret/underbelly-turret/turret.tscn" type="PackedScene" id=2]
 
 [sub_resource type="ConvexPolygonShape" id=7]
 points = PoolVector3Array( 0.396009, 1.41977, 0.0531904, -0.388353, -1.42354, -0.0938275, -0.38633, -1.41621, 0.101941, -0.388353, 1.42354, -0.0938275, 0.174235, -1.40748, -0.359598, 0.0532657, -1.41973, 0.395997, -0.163726, 1.39308, 0.364571, -0.0938275, 1.42354, -0.388353, 0.396009, -1.41977, 0.0531904, 0.320339, 1.41023, -0.238757, 0.244297, 1.39192, 0.316237, -0.215036, -1.41393, -0.336907, -0.238757, -1.41023, 0.320339, -0.359657, 1.40771, 0.17411, 0.316272, -1.39208, 0.244249, 0.364571, -1.39308, -0.163726, -0.282761, 1.38805, -0.282836, 0.102013, 1.41614, -0.386313, 0.0532657, 1.41973, 0.395997, -0.0938275, -1.42354, -0.388353, -0.0685995, -1.41142, 0.393705, 0.393705, 1.41142, -0.0685995, -0.336907, -1.41393, -0.215036, 0.346174, 1.41629, 0.199622, 0.150766, -1.41575, 0.370433, 0.274465, -1.42456, -0.290388, 0.221308, 1.39831, -0.333137, -0.265379, 1.4225, 0.298659, -0.333169, -1.39844, 0.221253, 0.102013, -1.41614, -0.386313, -0.38633, 1.41621, 0.101941, 0.370456, -1.41584, 0.1507, -0.362998, 1.42063, -0.16705, -0.16705, 1.42063, -0.362998, 0.393705, -1.41142, -0.0685995, -0.0685995, 1.41142, 0.393705, 0.150766, 1.41575, 0.370433, 0.244297, -1.39192, 0.316237, 0.274465, 1.42456, -0.290388, -0.163726, -1.39308, 0.364571, 0.364571, 1.39308, -0.163726, -0.282761, -1.38805, -0.282836, -0.265379, -1.4225, 0.298659, 0.320339, -1.41023, -0.238757, -0.333169, 1.39844, 0.221253, 0.370456, 1.41584, 0.1507, 0.27012, 1.40164, 0.294343, -0.336907, 1.41393, -0.215036, -0.215036, 1.41393, -0.336907, -0.16705, -1.42063, -0.362998, -0.362998, -1.42063, -0.16705, -0.359657, -1.40771, 0.17411, 0.174235, 1.40748, -0.359598, 0.221308, -1.39831, -0.333137, 0.316272, 1.39208, 0.244249, 0.346174, -1.41629, 0.199622, -0.238757, 1.41023, 0.320339, 0.27012, -1.40164, 0.294343 )
@@ -35,22 +35,6 @@ mid_height = 0.3
 
 [sub_resource type="SpatialMaterial" id=10]
 albedo_color = Color( 0.345098, 0.345098, 0.345098, 1 )
-
-[sub_resource type="CylinderMesh" id=30]
-top_radius = 0.4
-bottom_radius = 0.4
-height = 0.4
-
-[sub_resource type="SpatialMaterial" id=21]
-albedo_color = Color( 0.352941, 0.352941, 0.352941, 1 )
-
-[sub_resource type="CylinderMesh" id=22]
-top_radius = 0.06
-bottom_radius = 0.06
-height = 1.0
-
-[sub_resource type="SpatialMaterial" id=23]
-albedo_color = Color( 0.231373, 0.231373, 0.231373, 1 )
 
 [sub_resource type="SpatialMaterial" id=13]
 flags_transparent = true
@@ -113,22 +97,8 @@ material/0 = SubResource( 10 )
 [node name="Position3D" type="Position3D" parent="pivot"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.37514 )
 
-[node name="turret" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.322213, -1.19304 )
-mesh = SubResource( 30 )
-material/0 = SubResource( 21 )
-
-[node name="gun" type="Spatial" parent="turret"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.493964 )
-
-[node name="barel" type="MeshInstance" parent="turret/gun"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.379483 )
-mesh = SubResource( 22 )
-skeleton = NodePath("../..")
-material/0 = SubResource( 23 )
-
-[node name="aiming_reticle" parent="turret/gun" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15 )
+[node name="turret" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.342199, -1.04276 )
 
 [node name="CPUParticles" type="CPUParticles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.44582 )

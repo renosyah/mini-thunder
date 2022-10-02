@@ -1,26 +1,10 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://entity/unit/vtol-unit/training_helicopter/training_helicopter.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/aiming_reticle/aiming_reticle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entity/turret/underbelly-turret/turret.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=29]
 extents = Vector3( 1, 0.750869, 0.845175 )
-
-[sub_resource type="CylinderMesh" id=30]
-top_radius = 0.4
-bottom_radius = 0.4
-height = 0.4
-
-[sub_resource type="SpatialMaterial" id=21]
-albedo_color = Color( 0.352941, 0.352941, 0.352941, 1 )
-
-[sub_resource type="CylinderMesh" id=22]
-top_radius = 0.06
-bottom_radius = 0.06
-height = 1.0
-
-[sub_resource type="SpatialMaterial" id=23]
-albedo_color = Color( 0.231373, 0.231373, 0.231373, 1 )
 
 [sub_resource type="CylinderMesh" id=17]
 top_radius = 0.4
@@ -110,22 +94,8 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0815371, -0.13468 )
 shape = SubResource( 29 )
 
-[node name="turret" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.696093, -0.482594 )
-mesh = SubResource( 30 )
-material/0 = SubResource( 21 )
-
-[node name="gun" type="Spatial" parent="turret"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.493964 )
-
-[node name="barel" type="MeshInstance" parent="turret/gun"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.379483 )
-mesh = SubResource( 22 )
-skeleton = NodePath("../..")
-material/0 = SubResource( 23 )
-
-[node name="aiming_reticle" parent="turret/gun" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15 )
+[node name="turret" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.670784, -0.5923 )
 
 [node name="pivot" type="Spatial" parent="."]
 
