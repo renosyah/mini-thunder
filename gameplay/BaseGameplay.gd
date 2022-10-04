@@ -9,8 +9,7 @@ func _ready():
 	load_map()
 	setup_ui()
 	setup_camera()
-	setup_enviroment()
-	setup_directional_light()
+	setup_day_night_dome()
 	
 ################################################################
 # map
@@ -39,20 +38,12 @@ func setup_camera():
 	_camera.translation.y = 5.0
 	
 ################################################################
-# enviroment
-var _enviroment :WorldEnvironment
-
-func setup_enviroment():
-	_enviroment = preload("res://assets/enviroment/WorldEnvironment.tscn").instance()
-	add_child(_enviroment)
-	
-################################################################
 # directional light
-var _directional_light : DirectionalLight
+var _day_night_dome : DayNightDome
 
-func setup_directional_light():
-	_directional_light = preload("res://assets/directional-light/DirectionalLight.tscn").instance()
-	add_child(_directional_light)
+func setup_day_night_dome():
+	_day_night_dome = preload("res://assets/day-night/day_night_dome.tscn").instance()
+	add_child(_day_night_dome)
 
 ################################################################
 # network connection watcher
