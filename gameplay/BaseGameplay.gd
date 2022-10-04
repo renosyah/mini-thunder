@@ -19,7 +19,7 @@ var _map :BaseMap
 func load_map():
 	_map = preload("res://map/test_map/test_map.tscn").instance()
 	add_child(_map)
-	_map.translation.y = -0.5
+	_map.generate_map()
 	
 ################################################################
 # ui

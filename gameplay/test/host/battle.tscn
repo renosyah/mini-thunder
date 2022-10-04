@@ -13,21 +13,21 @@
 script = ExtResource( 1 )
 
 [node name="training_aircraft" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.685, -0.180138, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.685, 5, 0 )
 
 [node name="3d_marker3" parent="training_aircraft" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 icon = ExtResource( 8 )
 
 [node name="training_helicopter" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.31919, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 
 [node name="3d_marker2" parent="training_helicopter" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 icon = ExtResource( 5 )
 
 [node name="training_tank" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.56059, 2.49015, 1.08055 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.56059, 5, 1.08055 )
 
 [node name="3d_marker" parent="training_tank" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
