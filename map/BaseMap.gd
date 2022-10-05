@@ -55,7 +55,7 @@ func generate_map():
 		var value = noise.get_noise_3d(vertext.x * map_scale ,vertext.y * map_scale, vertext.z * map_scale)
 		var gradient_value = data.get_pixel((vertext.x + map_size) * 0.5, (vertext.z + map_size) * 0.5).r * 0.8
 		value -= gradient_value
-		value = clamp(value, -0.2, 1)
+		value = clamp(value, -0.075, 2)
 		vertext.y = value * (map_height + 2.0)
 		data_tool.set_vertex(i, vertext)
 		
@@ -81,11 +81,11 @@ func generate_map():
 	surface_tool.create_from(array_plane, 0)
 	surface_tool.generate_normals()
 	
-	var mesh_instance = MeshInstance.new()
-	mesh_instance.mesh = surface_tool.commit()
-	mesh_instance.set_surface_material(0, map_land_shander)
-	mesh_instance.create_trimesh_collision()
-	add_child(mesh_instance)
+	var land_mesh_instance = MeshInstance.new()
+	land_mesh_instance.mesh = surface_tool.commit()
+	land_mesh_instance.set_surface_material(0, map_land_shander)
+	land_mesh_instance.create_trimesh_collision()
+	add_child(land_mesh_instance)
 	
 func _stuff_placement(_models :Array, _pos :Vector3):
 	var mesh_instance = MeshInstance.new()

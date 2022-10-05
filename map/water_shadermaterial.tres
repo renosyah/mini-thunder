@@ -24,7 +24,7 @@ vec3 apply_distortion(vec3 vertext, float time){
 }
 
 void vertex() {
-	VERTEX = apply_distortion(VERTEX, TIME * 0.6);
+	VERTEX = apply_distortion(VERTEX, TIME * 0.2);
 }
 
 void fragment() {

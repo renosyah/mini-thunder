@@ -1,6 +1,7 @@
 extends Control
 
-onready var ip = $CanvasLayer/Control/VBoxContainer/ip
+onready var _ip = $CanvasLayer/Control/VBoxContainer/ip
+onready var _seed = $CanvasLayer/Control/VBoxContainer/seed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,11 +14,12 @@ func _on_host_pressed():
 		return
 		
 func _host_player_connected(_player_network_unique_id : int, _player : Dictionary):
+	Global.mp_game_data["seed"] = int(_seed.text)
 	get_tree().change_scene("res://gameplay/test/host/battle.tscn")
 	
 func _on_join_pressed():
 	Network.connect("client_player_connected", self , "_client_player_connected")
-	var err = Network.connect_to_server(ip.text, Global.client.port , {})
+	var err = Network.connect_to_server(_ip.text, Global.client.port , {})
 	if err != OK:
 		return
 		

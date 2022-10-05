@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/joystick/virtual_joystick.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/test/ui/ui.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://gameplay/test/ui/fix_wing.png" type="Texture" id=6]
 [ext_resource path="res://gameplay/test/ui/tank.png" type="Texture" id=7]
 [ext_resource path="res://assets/ui/touch_button/touch_button.tscn" type="PackedScene" id=8]
+[ext_resource path="res://gameplay/test/ui/fox.png" type="Texture" id=9]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -23,14 +24,30 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+visible = false
 anchor_right = 1.0
 margin_bottom = 100.0
 mouse_filter = 2
 alignment = 1
 
+[node name="fox" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 285.0
+margin_right = 385.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+icon = ExtResource( 9 )
+flat = true
+expand_icon = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 389.0
+margin_right = 399.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
 [node name="tank" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
-margin_left = 344.0
-margin_right = 444.0
+margin_left = 403.0
+margin_right = 503.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
 icon = ExtResource( 7 )
@@ -38,14 +55,14 @@ flat = true
 expand_icon = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer"]
-margin_left = 448.0
-margin_right = 458.0
+margin_left = 507.0
+margin_right = 517.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="heli" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
-margin_left = 462.0
-margin_right = 562.0
+margin_left = 521.0
+margin_right = 621.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
 icon = ExtResource( 5 )
@@ -53,14 +70,14 @@ flat = true
 expand_icon = true
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer"]
-margin_left = 566.0
-margin_right = 576.0
+margin_left = 625.0
+margin_right = 635.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="fix_wing" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
-margin_left = 580.0
-margin_right = 680.0
+margin_left = 639.0
+margin_right = 739.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
 icon = ExtResource( 6 )
@@ -136,10 +153,11 @@ color = Color( 0.282353, 0.282353, 0.282353, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 3 )
-text = "Fire"
+text = "Attack"
 align = 1
 valign = 1
 
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/fox" to="." method="_on_fox_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/tank" to="." method="_on_tank_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/heli" to="." method="_on_heli_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/fix_wing" to="." method="_on_fix_wing_pressed"]

@@ -20,9 +20,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -124.0
-margin_top = -40.0
+margin_top = -111.0
 margin_right = 124.0
-margin_bottom = 40.0
+margin_bottom = 111.0
 
 [node name="ip" type="TextEdit" parent="CanvasLayer/Control/VBoxContainer"]
 margin_right = 248.0
@@ -31,16 +31,24 @@ rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = ExtResource( 2 )
 text = "192.168.100.162"
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="seed" type="TextEdit" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 64.0
 margin_right = 248.0
-margin_bottom = 74.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 0, 60 )
+custom_fonts/font = ExtResource( 2 )
+text = "1"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 128.0
+margin_right = 248.0
+margin_bottom = 138.0
 rect_min_size = Vector2( 0, 10 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
-margin_top = 78.0
+margin_top = 142.0
 margin_right = 248.0
-margin_bottom = 158.0
+margin_bottom = 222.0
 
 [node name="host" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
 margin_right = 100.0

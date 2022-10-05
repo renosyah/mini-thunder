@@ -23,6 +23,13 @@ func _ready() -> void:
 func _wobling_timer_timeout() -> void:
 	_wobling = Vector2(rand_range(-0.12, 0.12), rand_range(-0.11, 0.11))
 	
+func _direction_input():
+	._direction_input()
+	if move_direction != Vector2.ZERO:
+		_moving_state = MOVING
+	else:
+		_moving_state = IDDLE
+	
 func master_moving(delta :float) -> void:
 	# full override
 	# dont remove comment

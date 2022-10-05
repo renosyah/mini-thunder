@@ -1,5 +1,6 @@
 extends BaseUi
 
+signal fox
 signal tank
 signal heli
 signal fix_wing
@@ -57,3 +58,8 @@ func _on_tank_pressed():
 	camera_control.show()
 	emit_signal("tank")
 	
+func _on_fox_pressed():
+	hide_control()
+	virtual_joystick.show()
+	camera_control.show()
+	emit_signal("fox")

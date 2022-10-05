@@ -22,5 +22,7 @@ var client = {
 	network_unique_id = 0,
 }
 var mp_players = []
-var mp_game_data = {}
+var mp_game_data = {
+	"seed" : 1
+}
 var mp_exception_message = ""

@@ -18,6 +18,7 @@ var _map :BaseMap
 func load_map():
 	_map = preload("res://map/test_map/test_map.tscn").instance()
 	add_child(_map)
+	_map.map_seed = Global.mp_game_data["seed"]
 	_map.generate_map()
 	
 ################################################################

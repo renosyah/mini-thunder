@@ -19,7 +19,7 @@ onready var directional_light = $DirectionalLight
 func _ready():
 	world_environment.environment.background_color = background_color
 	directional_light.light_color = day_color
-#	set_process(false)
+	set_process(false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -32,7 +32,7 @@ func _process(delta):
 	elif rotation_degrees.x > 100:
 		background_color = lerp(background_color, night_sky_color, 5 * delta)
 		directional_light.light_color = night_color
-		rotate_x(0.2 * delta)
+		rotate_x(0.012 * delta)
 		
 	elif rotation_degrees.x < -90 and rotation_degrees.x < -80:
 		background_color = lerp(background_color, morning_sky_color, 5 * delta)

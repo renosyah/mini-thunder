@@ -23,6 +23,12 @@ func _direction_input() -> void:
 	_aim_direction = Vector3.ZERO
 	_aim_direction = camera_basis.z * move_direction.y + camera_basis.x * move_direction.x
 	
+	if move_direction != Vector2.ZERO:
+		_moving_state = MOVING
+	else:
+		_moving_state = IDDLE
+	
+	
 func master_moving(delta :float) -> void:
 	# full override
 	# dont remove comment

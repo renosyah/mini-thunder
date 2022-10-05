@@ -1,6 +1,10 @@
 extends BaseEntity
 class_name BaseUnit
 
+const NONE = 1
+const IDDLE = 1
+const MOVING = 2
+
 export var gravity_multiplier :float = 0.075
 
 export var move_direction :Vector2 = Vector2.ZERO
@@ -10,6 +14,7 @@ export var speed :float = 4.0
 export var acceleration :float = 2.0
 export var deceleration :float = 6.0
 
+var _moving_state :int = IDDLE
 var _velocity :Vector3 = Vector3.ZERO
 var _snap :Vector3 = Vector3.ZERO
 var _up_direction :Vector3 = Vector3.UP
@@ -31,9 +36,19 @@ func _network_timmer_timeout() -> void:
 		rset_unreliable("_puppet_translation", translation)
 		rset_unreliable("_puppet_rotation", rotation)
 		rset_unreliable("_puppet_facing_direction", facing_direction)
+		rset_unreliable("_puppet_moving_state", _moving_state)
 		
-puppet var _puppet_translation :Vector3
 puppet var _puppet_rotation :Vector3
+puppet var _puppet_translation :Vector3
+
+puppetsync var _puppet_moving_state : int setget _set_puppet_moving_state
+func _set_puppet_moving_state(_val : int):
+	_puppet_moving_state = _val
+	
+	if _is_master():
+		return
+		
+	_moving_state = _puppet_moving_state
 	
 puppet var _puppet_facing_direction :Vector2 setget _set_facing_direction
 func _set_facing_direction(val :Vector2) -> void:
