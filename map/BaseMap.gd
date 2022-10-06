@@ -87,6 +87,10 @@ func generate_map():
 	land_mesh_instance.create_trimesh_collision()
 	add_child(land_mesh_instance)
 	
+	var grass :Grass = preload("res://addons/grass/Grass.tscn").instance()
+	add_child(grass)
+	grass.mesh = land_mesh_instance.mesh
+	
 func _stuff_placement(_models :Array, _pos :Vector3):
 	var mesh_instance = MeshInstance.new()
 	mesh_instance.mesh = load(_models[rand_range(0, _models.size() - 1)])

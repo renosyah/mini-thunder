@@ -11,6 +11,7 @@ onready var up = $CanvasLayer/Control/up
 onready var down = $CanvasLayer/Control/down
 onready var camera_control = $CanvasLayer/Control/camera_control
 onready var fire = $CanvasLayer/Control/fire
+onready var jump = $CanvasLayer/Control/jump
 
 func _ready():
 	_on_tank_pressed()
@@ -29,6 +30,9 @@ func is_down_pressed():
 	
 func is_fire_pressed():
 	return fire.pressed
+	
+func is_jump_pressed():
+	return jump.pressed
 	
 func joystick_move_direction() -> Vector2:
 	return virtual_joystick.get_output()

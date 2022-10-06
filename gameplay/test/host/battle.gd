@@ -3,6 +3,7 @@ extends BaseGameplay
 var _unit :BaseUnit
 
 onready var fox :BaseGroundUnit = $fox
+onready var fox2 :BaseGroundUnit = $fox2
 onready var training_helicopter :BaseVTolUnit = $training_helicopter
 onready var training_tank :BaseGroundUnit = $training_tank
 onready var training_aircraft :BaseFixedWingUnit = $training_aircraft
@@ -10,7 +11,6 @@ onready var training_aircraft :BaseFixedWingUnit = $training_aircraft
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_unit = fox
-	_choose_fox()
 	_ui.connect("fox", self, "_choose_fox")
 	_ui.connect("tank", self, "_choose_tank")
 	_ui.connect("heli", self, "_choose_heli")
@@ -40,6 +40,7 @@ func _process(delta):
 		"command_facing_direction":_camera.get_facing_direction(),
 		"command_climb_direction": 1 if _ui.is_up_pressed() else -1 if _ui.is_down_pressed() else 0,
 		"command_atack": _ui.is_fire_pressed(),
+		"command_jump" :_ui.is_jump_pressed(),
 		"command_camera_basis": _camera.get_camera_basis(),
 	}
 	_send_command(_unit.get_path(), command)
@@ -62,7 +63,9 @@ remote func _send_command(_to_unit :NodePath, _command : Dictionary):
 	to_unit.facing_direction = _command["command_facing_direction"]
 	if _command["command_atack"]:
 		to_unit.attack()
-	
+		
+	if _command["command_jump"]:
+		to_unit.jump()
 	
 	
 	

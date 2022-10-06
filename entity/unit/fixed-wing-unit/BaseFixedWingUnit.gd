@@ -41,11 +41,6 @@ func _direction_input() -> void:
 	_aim_direction = Vector3.ZERO
 	var _aim: Basis = get_global_transform().basis
 	_aim_direction = _aim.z * -1.0
-	
-	if move_direction != Vector2.ZERO:
-		_moving_state = MOVING
-	else:
-		_moving_state = IDDLE
 		
 func master_moving(delta :float) -> void:
 	# full override

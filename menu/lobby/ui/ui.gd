@@ -9,7 +9,7 @@ func _ready():
 	
 func _on_host_pressed():
 	Network.connect("server_player_connected", self ,"_host_player_connected")
-	var err = Network.create_server(Global.server.max_player, Global.server.port,{})
+	var err = Network.create_server(Global.server.max_player, Global.server.port,{"name" : OS.get_name()})
 	if err != OK:
 		return
 		
@@ -19,7 +19,7 @@ func _host_player_connected(_player_network_unique_id : int, _player : Dictionar
 	
 func _on_join_pressed():
 	Network.connect("client_player_connected", self , "_client_player_connected")
-	var err = Network.connect_to_server(_ip.text, Global.client.port , {})
+	var err = Network.connect_to_server(_ip.text, Global.client.port , {"name" : OS.get_name()})
 	if err != OK:
 		return
 		

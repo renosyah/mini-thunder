@@ -3,14 +3,14 @@ extends BaseGameplay
 var _unit :BaseUnit
 
 onready var fox :BaseGroundUnit = $fox
+onready var fox2 :BaseGroundUnit = $fox2
 onready var training_helicopter :BaseVTolUnit = $training_helicopter
 onready var training_tank :BaseGroundUnit = $training_tank
 onready var training_aircraft :BaseFixedWingUnit = $training_aircraft
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_unit = training_tank
-	_choose_tank()
+	_unit = fox2
 	_ui.connect("fox", self, "_choose_fox")
 	_ui.connect("tank", self, "_choose_tank")
 	_ui.connect("heli", self, "_choose_heli")
@@ -47,6 +47,7 @@ func on_client_pool_network_request():
 		"command_facing_direction": _camera.get_facing_direction(),
 		"command_climb_direction": 1 if _ui.is_up_pressed() else -1 if _ui.is_down_pressed() else 0,
 		"command_atack": _ui.is_fire_pressed(),
+		"command_jump" :_ui.is_jump_pressed(),
 		"command_camera_basis": _camera.get_camera_basis(),
 	}
 	rpc_unreliable_id(Network.PLAYER_HOST_ID, "_send_command", _unit.get_path(), command)
