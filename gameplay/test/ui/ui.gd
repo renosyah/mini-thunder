@@ -12,9 +12,18 @@ onready var down = $CanvasLayer/Control/down
 onready var camera_control = $CanvasLayer/Control/camera_control
 onready var fire = $CanvasLayer/Control/fire
 onready var jump = $CanvasLayer/Control/jump
+onready var fps = $CanvasLayer/Control/VBoxContainer/fps
+onready var ping = $CanvasLayer/Control/VBoxContainer/ping
 
 func _ready():
 	_on_tank_pressed()
+	Network.connect("on_ping", self, "on_ping")
+	
+func on_ping(_ping :int):
+	ping.text = "Ping : " + str(_ping) + "/ms"
+	
+func _process(delta):
+	fps.text = "Fps : " +  str(Engine.get_frames_per_second())
 	
 func hide_control():
 	virtual_joystick.hide()

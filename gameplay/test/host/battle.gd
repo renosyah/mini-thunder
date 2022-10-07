@@ -3,7 +3,6 @@ extends BaseGameplay
 var _unit :BaseUnit
 
 onready var fox :BaseGroundUnit = $fox
-onready var fox2 :BaseGroundUnit = $fox2
 onready var training_helicopter :BaseVTolUnit = $training_helicopter
 onready var training_tank :BaseGroundUnit = $training_tank
 onready var training_aircraft :BaseFixedWingUnit = $training_aircraft
@@ -15,6 +14,13 @@ func _ready():
 	_ui.connect("tank", self, "_choose_tank")
 	_ui.connect("heli", self, "_choose_heli")
 	_ui.connect("fix_wing", self, "_choose_fix_wing")
+	
+func on_generate_map_completed():
+	.on_generate_map_completed()
+	fox.is_dead = false
+	training_helicopter.is_dead = false
+	training_tank.is_dead = false
+	training_aircraft.is_dead = false
 	
 func _choose_fox():
 	_unit = fox
@@ -64,7 +70,7 @@ remote func _send_command(_to_unit :NodePath, _command : Dictionary):
 	if _command["command_atack"]:
 		to_unit.attack()
 		
-	if _command["command_jump"]:
+	if _command["command_jump"] and to_unit.has_method("jump"):
 		to_unit.jump()
 	
 	

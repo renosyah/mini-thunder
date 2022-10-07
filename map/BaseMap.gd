@@ -1,6 +1,8 @@
 extends StaticBody
 class_name BaseMap
 
+signal on_generate_map_completed
+
 export var map_seed :int = 1
 export var map_size :float = 200
 export var map_scale :float = 1
@@ -11,10 +13,19 @@ export var map_height :int = 20
 export var max_stuff = 120
 export var stuff_directory = "res://map/model/"
 
+var thread = Thread.new()
+
 func _ready():
 	pass
 	
+func _exit_tree():
+	thread.wait_to_finish()
+	
 func generate_map():
+	if not thread.is_active():
+		thread.start(self, "_generate_map")
+		
+func _generate_map():
 	var noise = OpenSimplexNoise.new()
 	noise.seed = map_seed
 	noise.octaves = 4
@@ -37,6 +48,8 @@ func generate_map():
 	
 	var grass = _generate_grass(land.mesh)
 	add_child(grass)
+	
+	emit_signal("on_generate_map_completed")
 	
 	
 func _create_spawn_stuff(noise :OpenSimplexNoise, gradient :CustomGradientTexture) -> Array:

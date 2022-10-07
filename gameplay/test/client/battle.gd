@@ -3,14 +3,13 @@ extends BaseGameplay
 var _unit :BaseUnit
 
 onready var fox :BaseGroundUnit = $fox
-onready var fox2 :BaseGroundUnit = $fox2
 onready var training_helicopter :BaseVTolUnit = $training_helicopter
 onready var training_tank :BaseGroundUnit = $training_tank
 onready var training_aircraft :BaseFixedWingUnit = $training_aircraft
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_unit = fox2
+	_unit = fox
 	_ui.connect("fox", self, "_choose_fox")
 	_ui.connect("tank", self, "_choose_tank")
 	_ui.connect("heli", self, "_choose_heli")

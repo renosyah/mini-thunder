@@ -27,6 +27,9 @@ func master_moving(delta :float) -> void:
 	# full override
 	# dont remove comment
 	#.master_moving(delta)
+	if is_dead:
+		return
+		
 	_direction_input()
 	rotation.x = lerp(rotation.x, 0.0, rotation_speed * delta)
 	rotation.z = lerp(rotation.z, 0.0, rotation_speed * delta)
@@ -53,10 +56,10 @@ func _roll_pitch(delta: float) -> void:
 		_roll_input = lerp(_roll_input, -move_direction.x , input_response * delta)
 		
 	transform.basis = transform.basis.rotated(transform.basis.z, _roll_input * rotation_speed * delta)
-	rotation_degrees.z = clamp(rotation_degrees.z, -35, 35)
+	rotation_degrees.z = clamp(rotation_degrees.z, -25, 25)
 	
 	transform.basis = transform.basis.rotated(transform.basis.x, _pitch_input * rotation_speed * delta)
-	rotation_degrees.x = clamp(rotation_degrees.x, -35, 35)
+	rotation_degrees.x = clamp(rotation_degrees.x, -25, 25)
 	
 	transform.basis = transform.basis.orthonormalized()
 	

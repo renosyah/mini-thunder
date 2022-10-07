@@ -10,9 +10,9 @@ signal on_respawn(_entity)
 var player :PlayerData
 
 # vitality
-var is_dead :bool = false
+export var is_dead :bool = false
 var hit_by_player :PlayerData = PlayerData.new()
-var tag : String = "entity"
+export var tag : String = "entity"
 export var hp : int = 100.0
 export var max_hp : int = 100.0
 

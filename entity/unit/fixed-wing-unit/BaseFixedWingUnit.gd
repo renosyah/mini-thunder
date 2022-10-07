@@ -46,6 +46,9 @@ func master_moving(delta :float) -> void:
 	# full override
 	# dont remove comment
 	#.master_moving(delta)
+	if is_dead:
+		return
+	
 	_direction_input()
 	
 	rotation.x = lerp(rotation.x, 0.0, rotation_speed * delta)

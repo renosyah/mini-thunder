@@ -18,8 +18,12 @@ var _map :BaseMap
 func load_map():
 	_map = preload("res://map/test_map/test_map.tscn").instance()
 	add_child(_map)
+	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.map_seed = Global.mp_game_data["seed"]
 	_map.generate_map()
+	
+func on_generate_map_completed():
+	pass
 	
 ################################################################
 # ui
@@ -60,8 +64,8 @@ func init_connection_watcher():
 func _on_player_disconnected(_player_network_unique_id : int):
 	Network.request_player_info(_player_network_unique_id)
 	
-func _on_receive_player_info(_player_network_unique_id : int, data : Dictionary):
-	on_player_disynchronize(data["name"])
+func _on_receive_player_info(_player_network_unique_id : int, data :NetworkPlayer):
+	on_player_disynchronize(data.player_name)
 	
 func _server_disconnected():
 	on_host_disconnected()

@@ -55,7 +55,9 @@ func _set_puppet_move_direction(val :Vector2) -> void:
 	move_direction = _puppet_move_direction
 	
 remotesync func _attack() -> void:
-	pass
+	if is_dead:
+		return
+		
 	
 ################################################################
 # function main
@@ -68,11 +70,17 @@ func attack() -> void:
 	if not _is_master():
 		return
 		
+	if is_dead:
+		return
+		
 	rpc_unreliable("_attack")
 	
 ################################################################
 # function common
 func master_moving(delta :float) -> void:
+	if is_dead:
+		return
+		
 	.master_moving(delta)
 	_direction_input()
 	_accelerate(delta)
@@ -91,6 +99,9 @@ func _direction_input() -> void:
 	_aim_direction = _aim.z * move_direction.y + _aim.x * move_direction.x
 	
 func _accelerate(delta: float) -> void:
+	if is_dead:
+		return
+		
 	var temp_vel = _velocity
 	temp_vel.y = 0.0
 	
