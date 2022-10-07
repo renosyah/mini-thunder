@@ -3,7 +3,7 @@ extends BaseGroundUnit
 onready var animation_state = $pivot/AnimationTree.get("parameters/playback")
 onready var firing_delay = $firing_delay
 
-var node_not_move = ["Attack"]
+var node_not_move = ["Attack", "Jump", "Fall","ToucheGround"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
