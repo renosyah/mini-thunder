@@ -24,5 +24,6 @@ func _on_join_pressed():
 		return
 		
 func _client_player_connected(_player_network_unique_id : int, _player : Dictionary):
+	Global.mp_game_data["seed"] = int(_seed.text)
 	get_tree().change_scene("res://gameplay/test/client/battle.tscn")
 	

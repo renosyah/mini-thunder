@@ -28,8 +28,8 @@ void vertex() {
 }
 
 void fragment() {
-	METALLIC = 0.6;
-	SPECULAR = 0.5;
+	METALLIC = 0.4;
+	SPECULAR = 0.3;
 	ROUGHNESS = 0.2;
 	ALBEDO = out_color.xyz;
 }

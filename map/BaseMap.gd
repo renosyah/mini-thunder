@@ -10,7 +10,6 @@ export var map_height :int = 20
 
 export var max_stuff = 120
 export var stuff_directory = "res://map/model/"
-var stuffs = []
 
 func _ready():
 	pass
@@ -21,20 +20,53 @@ func generate_map():
 	noise.octaves = 4
 	noise.period = 80.0
 	
+	var custom_gradient = CustomGradientTexture.new()
+	custom_gradient.gradient = Gradient.new()
+	custom_gradient.type = CustomGradientTexture.GradientType.RADIAL
+	custom_gradient.size = Vector2.ONE * map_size + Vector2.ONE
+	
+	var land = _create_land(noise, custom_gradient)
+	add_child(land)
+	
+	var stuffs = _create_spawn_stuff(noise, custom_gradient)
+	for stuff in stuffs:
+		add_child(stuff)
+	
+	var water = _create_water()
+	add_child(water)
+	
+	var grass = _generate_grass(land.mesh)
+	add_child(grass)
+	
+	
+func _create_spawn_stuff(noise :OpenSimplexNoise, gradient :CustomGradientTexture) -> Array:
+	var stuffs = []
+	
+	var data = gradient.get_data()
+	data.lock()
+	
+	var _models = _get_models()
+	var _half_size = int(map_size * 0.5)
+	for x in range(-_half_size, _half_size, 8):
+		for z in range(-_half_size, _half_size, 8):
+			var _pos = Vector3(x ,0.0, z)
+			var _value = noise.get_noise_3d(_pos.x * map_scale , 0.0, _pos.z * map_scale)
+			var gradient_value = data.get_pixel((_pos.x + map_size) * 0.5, (_pos.z + map_size) * 0.5).r * 0.8
+			var _value_c = _value
+			_value -= gradient_value
+			if _value > 0.0:
+				_pos.y = _value * map_height
+				stuffs.append(_stuff_placement(_models, _pos, clamp(int(_value_c * 20), 0, _models.size() - 1)))
+				
+	data.unlock()
+	return stuffs
+	
+func _create_land(noise :OpenSimplexNoise, gradient :CustomGradientTexture) -> MeshInstance:
 	var land_mesh = PlaneMesh.new()
 	land_mesh.size = Vector2(map_size, map_size)
 	land_mesh.subdivide_width = map_size * 0.5
 	land_mesh.subdivide_depth = map_size * 0.5
-	
-	var water_mesh = PlaneMesh.new()
-	water_mesh.size = Vector2(map_size, map_size)
-	
-	var water_mesh_instance = MeshInstance.new()
-	water_mesh_instance.mesh = water_mesh
-	water_mesh_instance.set_surface_material(0, map_water_shander)
-	add_child(water_mesh_instance)
-	water_mesh_instance.translation.y -= 1.0
-	
+
 	var surface_tool = SurfaceTool.new()
 	surface_tool.create_from(land_mesh, 0)
 	
@@ -43,11 +75,7 @@ func generate_map():
 	var data_tool = MeshDataTool.new()
 	data_tool.create_from_surface(array_plane, 0)
 	
-	var custom_gradient = CustomGradientTexture.new()
-	custom_gradient.gradient = Gradient.new()
-	custom_gradient.type = CustomGradientTexture.GradientType.RADIAL
-	custom_gradient.size = Vector2.ONE * map_size + Vector2.ONE
-	var data = custom_gradient.get_data()
+	var data = gradient.get_data()
 	data.lock()
 	
 	for i in range(data_tool.get_vertex_count()):
@@ -59,18 +87,6 @@ func generate_map():
 		vertext.y = value * (map_height + 2.0)
 		data_tool.set_vertex(i, vertext)
 		
-	var _models = _find_obj_paths()
-	var _half_size = int(map_size * 0.5)
-	for x in range(-_half_size, _half_size, 8):
-		for z in range(-_half_size, _half_size, 8):
-			var _pos = Vector3(x,0.0, z)
-			var _value = noise.get_noise_3d(_pos.x * map_scale , 0.0, _pos.z * map_scale)
-			var gradient_value = data.get_pixel((_pos.x + map_size) * 0.5, (_pos.z + map_size) * 0.5).r * 0.8
-			_value -= gradient_value
-			if _value > 0.0:
-				_pos.y = _value * map_height
-				_stuff_placement(_models, _pos)
-				
 	data.unlock()
 	
 	for i in range(array_plane.get_surface_count()):
@@ -85,19 +101,30 @@ func generate_map():
 	land_mesh_instance.mesh = surface_tool.commit()
 	land_mesh_instance.set_surface_material(0, map_land_shander)
 	land_mesh_instance.create_trimesh_collision()
-	add_child(land_mesh_instance)
+	return land_mesh_instance
 	
+func _create_water() -> MeshInstance:
+	var water_mesh = PlaneMesh.new()
+	water_mesh.size = Vector2(map_size, map_size) * 2
+	
+	var water_mesh_instance = MeshInstance.new()
+	water_mesh_instance.mesh = water_mesh
+	water_mesh_instance.set_surface_material(0, map_water_shander)
+	water_mesh_instance.translation.y -= 1.0
+	return water_mesh_instance
+	
+func _generate_grass(land_mesh :Mesh):
 	var grass :Grass = preload("res://addons/grass/Grass.tscn").instance()
-	add_child(grass)
-	grass.mesh = land_mesh_instance.mesh
+	grass.mesh = land_mesh
+	return grass
 	
-func _stuff_placement(_models :Array, _pos :Vector3):
+func _stuff_placement(_models :Array, _pos :Vector3, pointer :int) -> MeshInstance:
 	var mesh_instance = MeshInstance.new()
-	mesh_instance.mesh = load(_models[rand_range(0, _models.size() - 1)])
-	add_child(mesh_instance)
+	mesh_instance.mesh = load(_models[pointer])
 	mesh_instance.translation = _pos
+	return mesh_instance
 	
-func _find_obj_paths() -> Array:
+func _get_models() -> Array:
 	var png_paths := []
 	var dir_queue := [stuff_directory]
 	var dir: Directory

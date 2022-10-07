@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://entity/unit/ground-unit/fox/fox.gd" type="Script" id=1]
 [ext_resource path="res://entity/unit/ground-unit/fox/Material_008.material" type="Material" id=2]
@@ -1579,6 +1579,8 @@ auto_advance = true
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+
 [sub_resource type="AnimationNodeStateMachine" id=29]
 states/Attack/node = SubResource( 15 )
 states/Attack/position = Vector2( 522, 166 )
@@ -1592,7 +1594,7 @@ states/Run/node = SubResource( 19 )
 states/Run/position = Vector2( 522, 37 )
 states/ToucheGround/node = SubResource( 20 )
 states/ToucheGround/position = Vector2( 125, 197 )
-transitions = [ "Idle", "Run", SubResource( 21 ), "Run", "Idle", SubResource( 22 ), "Idle", "Attack", SubResource( 23 ), "Attack", "Idle", SubResource( 24 ), "Idle", "Jump", SubResource( 25 ), "Jump", "Fall", SubResource( 26 ), "Fall", "ToucheGround", SubResource( 27 ), "ToucheGround", "Idle", SubResource( 28 ) ]
+transitions = [ "Idle", "Run", SubResource( 21 ), "Run", "Idle", SubResource( 22 ), "Idle", "Attack", SubResource( 23 ), "Attack", "Idle", SubResource( 24 ), "Idle", "Jump", SubResource( 25 ), "Jump", "Fall", SubResource( 26 ), "Fall", "ToucheGround", SubResource( 27 ), "ToucheGround", "Idle", SubResource( 28 ), "Run", "Jump", SubResource( 32 ) ]
 start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=30]
@@ -1824,7 +1826,11 @@ active = true
 parameters/playback = SubResource( 30 )
 
 [node name="firing_delay" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.8
+one_shot = true
+
+[node name="jump_delay" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [node name="animation_checker" type="Timer" parent="."]

@@ -2,6 +2,7 @@ extends BaseGroundUnit
 
 onready var animation_state = $pivot/AnimationTree.get("parameters/playback")
 onready var firing_delay = $firing_delay
+onready var jump_delay = $jump_delay
 
 var node_not_move = ["Attack", "Jump", "ToucheGround", "Fall"]
 var is_jump = false
@@ -26,19 +27,20 @@ func attack():
 		return
 		
 	if firing_delay.is_stopped():
-		rpc_unreliable("_attack")
+		rpc("_attack")
 		firing_delay.start()
 		
 func jump():
 	if not _is_master():
 		return
 		
-	if is_on_floor() and not is_jump:
+	if jump_delay.is_stopped() and is_on_floor() and not is_jump:
 		is_jump = true
 		_snap = Vector3.ZERO
-		translation.y += 0.55
+		translation.y += 1.55
 		_velocity.y = 15.0
-		rpc_unreliable("_jump")
+		rpc("_jump")
+		jump_delay.start()
 	
 func master_moving(delta):
 	.master_moving(delta)
