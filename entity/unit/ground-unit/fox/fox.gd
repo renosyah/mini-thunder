@@ -3,7 +3,7 @@ extends BaseGroundUnit
 onready var animation_state = $pivot/AnimationTree.get("parameters/playback")
 onready var firing_delay = $firing_delay
 
-var node_not_move = ["Attack"]
+var node_not_move = ["Attack", "Jump", "ToucheGround", "Fall"]
 var is_jump = false
 
 # Called when the node enters the scene tree for the first time.
@@ -15,6 +15,9 @@ remotesync func _attack():
 	
 remotesync func _jump():
 	animation_state.travel("Jump")
+	
+remotesync func _land():
+	animation_state.travel("ToucheGround")
 	
 func attack():
 	#.attack()
@@ -42,10 +45,10 @@ func master_moving(delta):
 	
 	if is_jump and is_on_floor():
 		is_jump = false
-		animation_state.travel("ToucheGround")
+		rpc_unreliable("_land")
 	
 func _on_animation_checker_timeout():
-	if is_jump:
+	if animation_state.get_current_node() in node_not_move:
 		return
 		
 	if move_direction != Vector2.ZERO:
